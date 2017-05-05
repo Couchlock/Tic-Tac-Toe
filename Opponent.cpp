@@ -8,23 +8,23 @@ Opponent::Opponent(char mark)
 	std::cout << "new Opponent created\n";
 }
 
-int Opponent::move(std::set<int> *a, Player *p, char *gb)
+int Opponent::move(std::set<int> &a, Player *p, const char *gb)
 {
 	std::cout << "My Turn...\n";
 	int temp = enemy_logic(p, gb);
 	std::cout << "Temp: " << temp << std::endl;
 	if (temp)
 		return temp;
-	std::set<int>::iterator it = a->begin();
-	temp = rand() % a->size() + 1;	//random roll from within whats left of the set
+	std::set<int>::iterator it = a.begin();
+	temp = rand() % a.size() + 1;	//random roll from within whats left of the set
 	for (int i = 0; i < temp; i++, it++);	//match our iterator to position of our random roll
 	it--;	//went one too far in for loop
 	temp = *it;	//because i can't dereference this as a return value for some reason...
-	a->erase(it);	//remove the selected space from pool of available spaces
+	a.erase(it);	//remove the selected space from pool of available spaces
 	return temp;	//return the space computer selected
 }
 
-int Opponent::enemy_logic(Player *p, char *gb)
+int Opponent::enemy_logic(Player *p, const char *gb)
 {
 	char m = get_marker();
 	while (true)

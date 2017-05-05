@@ -18,7 +18,7 @@ private:
 	char board[10] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 	string vertDiv = { " | " };
 	string horDiv = { "--- --- ---" };
-	Player* player;		//keeps track of whos turn it is
+	Player *player;		//keeps track of whos turn it is
 	int pCount = 0;		//keeps track of number of players
 	int count = 0;		//keeps track of number of moves;
 	Player *p1;

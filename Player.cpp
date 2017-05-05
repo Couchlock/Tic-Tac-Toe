@@ -16,7 +16,7 @@ char Player::get_marker()
 	return marker;
 }
 
-int Player::move(std::set<int> *a, Player *p, char *gb)
+int Player::move(std::set<int> &a, Player *p, const char *gb)
 {
 	std::cout << "Please choose a space: ";
 	while (true)
@@ -32,12 +32,12 @@ int Player::move(std::set<int> *a, Player *p, char *gb)
 	}
 }
 
-bool Player::check_space(int s, std::set<int> *a)
+bool Player::check_space(const int s, std::set<int> &a)
 {
-	std::set<int>::iterator it = a->find(s);
-	if (it != a->end())
+	std::set<int>::iterator it = a.find(s);
+	if (it != a.end())
 	{
-		a->erase(it);
+		a.erase(it);
 		return true;
 	}
 	else

@@ -15,7 +15,7 @@ void GameBoard::run_game()
 		while (!check_end_condition())
 		{
 			display_board();
-			board[player->move(&avail, p1, board)] = player->get_marker();
+			board[player->move(avail, p1, board)] = player->get_marker();
 			if (check_winner(player->get_marker()))
 				break;
 			count++;

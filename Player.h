@@ -11,8 +11,8 @@ public:
 	Player();
 	Player(char mark);
 	char get_marker();
-	virtual int move(std::set<int> *a, Player *p, char *gb);
-	bool check_space(int s, std::set<int> *a);
+	virtual int move(std::set<int> &a, Player *p, const char *gb);
+	bool check_space(const int s, std::set<int> &a);
 };
 
 #endif
