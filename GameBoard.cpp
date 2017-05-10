@@ -4,7 +4,10 @@
 using std::cout;
 using std::endl;
 
-GameBoard::GameBoard(){}
+GameBoard::GameBoard(int *c)
+{
+	count = c;
+}
 
 void GameBoard::run_game()
 {
@@ -18,7 +21,7 @@ void GameBoard::run_game()
 			board[player->move(avail, p1, board)] = player->get_marker();
 			if (check_winner(player->get_marker()))
 				break;
-			count++;
+			*count += 1;
 			change_turn();
 		}
 		break;	//to be replaced with the ability to play game again
@@ -69,7 +72,7 @@ int GameBoard::count_players()	//determines number of players
 	}
 	p1 = new Player('X');
 	if (pCount == 1)
-		p2 = new Opponent('O');
+		p2 = new Opponent('O', count);
 	else
 		p2 = new Player('O');
 	return pCount;
@@ -101,7 +104,7 @@ void GameBoard::change_turn()	//changes active player
 
 bool GameBoard::check_end_condition()	//checks for a tie
 {
-	if (count == 9)
+	if (*count == 9)
 	{
 		display_board();
 		cout << "It's a tie!\n";

@@ -20,11 +20,11 @@ private:
 	string horDiv = { "--- --- ---" };
 	Player *player;		//keeps track of whos turn it is
 	int pCount = 0;		//keeps track of number of players
-	int count = 0;		//keeps track of number of moves;
+	int *count;		//keeps track of number of moves;
 	Player *p1;
 	Player *p2;
 public:
-	GameBoard();
+	GameBoard(int *c);
 	void run_game();
 	void display_board();
 	bool check_winner(char m);

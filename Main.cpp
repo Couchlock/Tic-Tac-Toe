@@ -4,7 +4,8 @@
 #include <vector>
 int main()
 {
-	GameBoard* gb = new GameBoard;
+	int *count = new int(0);
+	GameBoard* gb = new GameBoard(count);
 	gb->run_game();
 	system("PAUSE");
 }
