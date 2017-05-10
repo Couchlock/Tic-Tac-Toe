@@ -27,7 +27,8 @@ int Opponent::move(std::set<int> &a, Player *p, const char *gb)
 
 int Opponent::enemy_logic(Player *p, const char *gb)
 {
-	srand(time(NULL));
+	std::cout << *count << std::endl;
+	srand((unsigned int)time(NULL));
 	static std::stack<int> lastMove;
 	static char Case;
 	static int intCase = 0;
@@ -75,8 +76,10 @@ int Opponent::enemy_logic(Player *p, const char *gb)
 				temp = rand() % 5 + 1;
 				Case = temp == 5 ? 'B' : 'A';
 			}
+			else if (*count == 1)
+				Case = 'C';
 			switch (Case) {
-			case('A'):
+			case('A'):;
 				switch (intCase) {
 				case(0):
 					if (*count == 0)						//if its the very first move...
@@ -87,8 +90,7 @@ int Opponent::enemy_logic(Player *p, const char *gb)
 					}
 					if (*count == 2)						//if its our 2nd move and we went first
 					{
-						intCase = (10 - lastMove.top()) != Empty ? 1 : check_even(&gb);	//if 2nd player took our opposite corner move to case A1, otherwise continue with A0
-						//intCase = check_even(&gb);									//check if 2nd player chose an even space...
+						intCase = (gb[10 - lastMove.top()] != Empty ? 1 : check_even(&gb));	//if 2nd player took our opposite corner move to case A1, otherwise continue with A0
 						if (intCase != 1)		//check our current subCase, if its 1, rerun function loop
 							return (10 - lastMove.top());	//otherwise, return the space opposite corner of our first move
 					}
@@ -111,7 +113,6 @@ int Opponent::enemy_logic(Player *p, const char *gb)
 					}
 					//at this point if we went first and we made it through move 4 above, we will win on basic checks
 				case(1):
-					std::cout << "using case A1\n";
 					if (*count == 2)		//if its our second move and we went first..
 					{
 						for (int i = 0; i <= 9; i++)
@@ -157,6 +158,30 @@ int Opponent::enemy_logic(Player *p, const char *gb)
 						}
 					}
 				}
+			case('C'):
+				if (*count == 1)
+				{
+					for (int i = 1; i <= 9; i++)
+						if (gb[i] == p->get_marker())
+							track = i;
+					temp = rand() % 4 + 1;
+					if (track == 5)
+					{
+						temp = (temp == 1 ? 1 : temp == 2 ? 3 : temp == 3 ? 7 : 9);
+						lastMove.push(temp);
+						return temp;
+					}
+					if (track % 2 != 0 && track != 5)
+						return (temp == 1 ? 2 : temp == 2 ? 4 : temp == 3 ? 6 : 8);
+				}
+				if (*count == 3 && (10 - lastMove.top() != Empty))
+				{
+					temp = rand() % 1;
+					if (lastMove.top() == 1 || lastMove.top() == 9)
+						return (temp == 0 ? 3 : 7);
+					else
+						return (temp == 0 ? 1 : 9);
+				}
 			}
 		}
 		return 0;	//base case to return random space
@@ -167,6 +192,9 @@ bool Opponent::check_even(const char *gb[])
 {
 	for (int i = 2; i <= 8; i += 2)		//check if 2nd player chose an even space
 		if ((*gb)[i] != Empty)				//if they did...
+		{
+			std::cout << "i:" << i << std::endl;
 			return true;
+		}
 	return false;
 }
